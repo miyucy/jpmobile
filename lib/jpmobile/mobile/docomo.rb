@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # =DoCoMo携帯電話
 
 module Jpmobile::Mobile
@@ -10,31 +11,6 @@ module Jpmobile::Mobile
     USER_AGENT_REGEXP = /^DoCoMo/
     # 対応するメールアドレスの正規表現
     MAIL_ADDRESS_REGEXP = /^.+@docomo\.ne\.jp$/
-
-    # オープンiエリアがあればエリアコードを +String+ で返す。無ければ +nil+ を返す。
-    def areacode
-      if params["ACTN"] == "OK"
-        return params["AREACODE"]
-      else
-        return nil
-      end
-    end
-
-    # 位置情報があれば Position のインスタンスを返す。無ければ +nil+ を返す。
-    def position
-      return @__position if defined? @__position
-      lat = params["lat"] || params["LAT"]
-      lon = params["lon"] || params["LON"]
-      geo = params["geo"] || params["GEO"]
-      return @__position = nil if ( lat.nil? || lat == '' || lon.nil? || lon == '' )
-      raise "Unsuppoted datum" if geo.downcase != "wgs84"
-      pos = Jpmobile::Position.new
-      raise "Unsuppoted" unless lat =~ /^([+-]\d+)\.(\d+)\.(\d+\.\d+)/
-      pos.lat = Jpmobile::Position.dms2deg($1,$2,$3)
-      raise "Unsuppoted" unless lon =~ /^([+-]\d+)\.(\d+)\.(\d+\.\d+)/
-      pos.lon = Jpmobile::Position.dms2deg($1,$2,$3)
-      return @__position = pos
-    end
 
     # 端末製造番号があれば返す。無ければ +nil+ を返す。
     def serial_number

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'ipaddr'
 
 module Jpmobile::Mobile
@@ -11,9 +12,6 @@ module Jpmobile::Mobile
     USER_AGENT_REGEXP = nil
     # 対応するメールアドレスの正規表現
     MAIL_ADDRESS_REGEXP = nil
-
-    # 緯度経度があれば Position のインスタンスを返す。
-    def position; return nil; end
 
     # 契約者又は端末を識別する文字列があれば返す。
     def ident; ident_subscriber || ident_device; end

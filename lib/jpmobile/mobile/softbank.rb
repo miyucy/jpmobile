@@ -6,7 +6,7 @@ require 'nkf'
 
 module Jpmobile::Mobile
   # ==Softbank携帯電話
-  # Vodafone, Jphoneのスーパクラス。
+  # Vodafoneスーパクラス。
   class Softbank < AbstractMobile
     autoload :IP_ADDRESSES, 'jpmobile/mobile/z_ip_addresses_softbank'
 
@@ -65,19 +65,6 @@ module Jpmobile::Mobile
     # cookieに対応しているか？
     def supports_cookie?
       true
-    end
-  end
-  # ==SoftBank 2G携帯電話(J-PHONE/Vodafone 2G)
-  # スーパクラスはVodafone。
-  class Jphone < Vodafone
-    # 対応するUser-Agentの正規表現
-    USER_AGENT_REGEXP = /^(J-PHONE|J-EMULATOR)/
-    # 対応するメールアドレスの正規表現
-    MAIL_ADDRESS_REGEXP = /^.+@jp-[dhtcrknsq]\.ne\.jp$/
-
-    # cookieに対応しているか？
-    def supports_cookie?
-      false
     end
   end
 end

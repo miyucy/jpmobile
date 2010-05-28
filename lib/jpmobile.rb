@@ -28,7 +28,6 @@ end
 %w(
   jpmobile/version.rb
   jpmobile/mobile/abstract_mobile.rb
-  jpmobile/mobile/display.rb
 ).each do |lib|
   require File.expand_path(File.join(File.dirname(__FILE__), lib))
 end

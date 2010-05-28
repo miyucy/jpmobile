@@ -5,7 +5,6 @@ module Jpmobile::Mobile
   # ==DoCoMo携帯電話
   class Docomo < AbstractMobile
     autoload :IP_ADDRESSES, 'jpmobile/mobile/z_ip_addresses_docomo'
-    autoload :DISPLAY_INFO, 'jpmobile/mobile/z_display_info_docomo'
 
     # 対応するUser-Agentの正規表現
     USER_AGENT_REGEXP = /^DoCoMo/
@@ -41,15 +40,6 @@ module Jpmobile::Mobile
       guid || icc
     end
 
-    # 画面情報を +Display+ クラスのインスタンスで返す。
-    def display
-      @__display ||= Jpmobile::Display.new(nil,nil,
-                            display_info[:browser_width],
-                            display_info[:browser_height],
-                            display_info[:color_p],
-                            display_info[:colors])
-    end
-
     # cookieに対応しているか？
     def supports_cookie?
       false
@@ -63,11 +53,6 @@ module Jpmobile::Mobile
         return $1
       end
       return nil
-    end
-
-    # 画面の情報を含むハッシュを返す。
-    def display_info
-      DISPLAY_INFO[model_name] || {}
     end
   end
 end

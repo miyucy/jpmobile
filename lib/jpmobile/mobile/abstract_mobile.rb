@@ -38,11 +38,6 @@ module Jpmobile::Mobile
       @__valid_ip ||= self.class.valid_ip? @request.remote_addr
     end
 
-    # 画面情報を +Display+ クラスのインスタンスで返す。
-    def display
-      @__displlay ||= Jpmobile::Display.new
-    end
-
     # クッキーをサポートしているか。
     def supports_cookie?
       return false

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.dirname(__FILE__)+'/helper'
 
 class EmoticonTestController < ActionController::Base
@@ -79,18 +80,6 @@ class EmoticonFunctionalTest < ActionController::TestCase
     assert_equal "［ドコモポイント］", @response.body
   end
 
-  def test_docomo_from_jphone
-    # J-PHONE携帯電話での閲覧
-    user_agent "J-PHONE/3.0/V301D"
-    get :docomo_cr
-    assert_equal "\e$Gj\x0f", @response.body
-    get :docomo_utf8
-    assert_equal "\e$Gj\x0f", @response.body
-    get :docomo_docomopoint
-    assert_equal "Shift_JIS", @response.charset
-    assert_equal "［ドコモポイント］".tosjis, @response.body
-  end
-
   def test_au_from_pc
     # PC
     get :au_cr
@@ -157,18 +146,6 @@ class EmoticonFunctionalTest < ActionController::TestCase
     get :softbank_utf8
     assert_equal "\e$Gj\x0f", @response.body
     get :query, :q=>[0xe04A].pack("U") # 3G端末はUTF-8で絵文字を送ってくる
-    assert_equal [0xf04a].pack("U"), assigns["q"]
-    assert_equal "\e$Gj\x0f", @response.body
-  end
-
-  def test_softbank_from_jphone
-    # J-PHONE携帯電話から
-    user_agent "J-PHONE/3.0/V301D"
-    get :softbank_cr
-    assert_equal "\e$Gj\x0f", @response.body
-    get :softbank_utf8
-    assert_equal "\e$Gj\x0f", @response.body
-    get :query, :q=>"\e$Gj\x0f" # J-PHONE端末はWebcodeで絵文字を送ってくる
     assert_equal [0xf04a].pack("U"), assigns["q"]
     assert_equal "\e$Gj\x0f", @response.body
   end

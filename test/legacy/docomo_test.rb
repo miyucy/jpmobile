@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.dirname(__FILE__)+'/helper'
 
 class DocomoTest < Test::Unit::TestCase
@@ -7,8 +8,6 @@ class DocomoTest < Test::Unit::TestCase
     reqs.each do |req|
       assert_equal(true, req.mobile?)
       assert_instance_of(Jpmobile::Mobile::Docomo, req.mobile)
-      assert_equal(nil, req.mobile.position)
-      assert_equal(nil, req.mobile.areacode)
       assert_equal(nil, req.mobile.serial_number)
       assert_equal(nil, req.mobile.icc)
       assert_equal(nil, req.mobile.ident)
@@ -24,57 +23,11 @@ class DocomoTest < Test::Unit::TestCase
     reqs.each do |req|
       assert_equal(true, req.mobile?)
       assert_instance_of(Jpmobile::Mobile::Docomo, req.mobile)
-      assert_equal(nil, req.mobile.position)
-      assert_equal(nil, req.mobile.areacode)
       assert_equal(nil, req.mobile.serial_number)
       assert_equal(nil, req.mobile.icc)
       assert_equal(nil, req.mobile.ident)
       assert_equal(nil, req.mobile.ident_device)
       assert_equal(nil, req.mobile.ident_subscriber)
-    end
-  end
-
-  # DoCoMo, iarea
-  def test_docomo_iarea
-    reqs = request_with_ua("DoCoMo/1.0/SO506iC/c20/TB/W20H10",
-                          {"QUERY_STRING"=>"AREACODE=00100&ACTN=OK"})
-    reqs.each do |req|
-      assert_equal("00100", req.mobile.areacode)
-    end
-  end
-
-  # DoCoMo, iarea
-  def test_docomo_iarea_with_posinfo
-    reqs = request_with_ua("DoCoMo/1.0/SO506iC/c20/TB/W20H10",
-                          {"QUERY_STRING"=>"LAT=%2B35.00.35.600&LON=%2B135.41.35.600&GEO=wgs84&POSINFO=2&AREACODE=00100&ACTN=OK"})
-    reqs.each do |req|
-      assert_equal("00100", req.mobile.areacode)
-      assert_in_delta(35.00988889, req.mobile.position.lat, 1e-7)
-      assert_in_delta(135.6932222, req.mobile.position.lon, 1e-7)
-    end
-  end
-
-  # DoCoMo, gps
-  # http://www.nttdocomo.co.jp/service/imode/make/content/html/outline/gps.html
-  def test_docomo_gps_sa702i
-    reqs = request_with_ua("DoCoMo/2.0 SA702i(c100;TB;W30H15)",
-                          {"QUERY_STRING"=>"lat=%2B35.00.35.600&lon=%2B135.41.35.600&geo=wgs84&x-acc=3"})
-    reqs.each do |req|
-      assert_in_delta(35.00988889, req.mobile.position.lat, 1e-7)
-      assert_in_delta(135.6932222, req.mobile.position.lon, 1e-7)
-    end
-  end
-
-  # DoCoMo, 903i, GPS
-  # "WGS84"が大文字。altで高度が取得できているようだ。どちらも仕様書には記述がない。
-  # http://www.nttdocomo.co.jp/service/imode/make/content/html/outline/gps.html
-  def test_docomo_gps_sh903i
-    reqs = request_with_ua("DoCoMo/2.0 SH903i(c100;TB;W24H16)",
-                          {"QUERY_STRING"=>
-                           "lat=%2B35.00.35.600&lon=%2B135.41.35.600&geo=WGS84&alt=%2B64.000&x-acc=1"})
-    reqs.each do |req|
-      assert_in_delta(35.00988889, req.mobile.position.lat, 1e-7)
-      assert_in_delta(135.6932222, req.mobile.position.lon, 1e-7)
     end
   end
 
@@ -117,32 +70,6 @@ class DocomoTest < Test::Unit::TestCase
                           {"REMOTE_ADDR"=>"127.0.0.1"})
     reqs.each do |req|
       assert_equal(false, req.mobile.valid_ip?)
-    end
-  end
-
-  # 端末の画面サイズを正しく取得できるか。
-  def test_docomo_so506ic_display
-    reqs = request_with_ua("DoCoMo/1.0/SO506iC/c20/TB/W20H10")
-    reqs.each do |req|
-      assert_equal(240, req.mobile.display.browser_width)
-      assert_equal(256, req.mobile.display.browser_height)
-      assert_equal(240, req.mobile.display.width)
-      assert_equal(256, req.mobile.display.height)
-      assert_equal(true, req.mobile.display.color?)
-      assert_equal(262144, req.mobile.display.colors)
-    end
-  end
-
-  # 端末の画面サイズを正しく取得できるか。
-  def test_docomo_sh902i_display
-    reqs = request_with_ua("DoCoMo/2.0 SH902i(c100;TB;W24H12)")
-    reqs.each do |req|
-      assert_equal(240, req.mobile.display.browser_width)
-      assert_equal(240, req.mobile.display.browser_height)
-      assert_equal(240, req.mobile.display.width)
-      assert_equal(240, req.mobile.display.height)
-      assert_equal(true, req.mobile.display.color?)
-      assert_equal(262144, req.mobile.display.colors)
     end
   end
 end

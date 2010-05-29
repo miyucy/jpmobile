@@ -119,13 +119,6 @@ describe FilterController, "au CA32 からのアクセス" do
   it_should_behave_like "Shift_JISで通信する端末との通信"
 end
 
-describe FilterController, "J-PHONE V401SH からのアクセス" do
-  before do
-    request.user_agent = "J-PHONE/3.0/V401SH"
-  end
-  it_should_behave_like "Shift_JISで通信する端末との通信"
-end
-
 describe FilterController, "Vodafone V903T からのアクセス" do
   before do
     request.user_agent = "Vodafone/1.0/V903T/TJ001 Browser/VF-Browser/1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1 Ext-J-Profile/JSCL-1.2.2 Ext-V-Profile/VSCL-2.0.0"

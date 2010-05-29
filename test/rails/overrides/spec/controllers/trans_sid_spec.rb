@@ -99,10 +99,6 @@ describe_mobile_with_ua "DoCoMo/2.0 SH902i(c100;TB;W24H12)" do
   it_should_behave_like "trans_sid が起動するとき"
 end
 
-describe_mobile_with_ua "J-PHONE/3.0/V301D" do
-  it_should_behave_like "trans_sid が起動するとき"
-end
-
 describe_mobile_with_ua "KDDI-CA32 UP.Browser/6.2.0.7.3.129 (GUI) MMP/2.0" do
   it_should_behave_like "trans_sid が起動しないとき"
 end

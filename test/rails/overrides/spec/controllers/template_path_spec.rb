@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.dirname(__FILE__) + '/../spec_helper'
 
 #
@@ -21,16 +22,6 @@ describe TemplatePathController, "au CA32 からのアクセス" do
   end
   it 'テンプレートの探索順が正しいこと' do
     response.template.mobile_template_candidates.should == [ 'mobile_au', 'mobile' ]
-  end
-end
-
-describe TemplatePathController, "J-PHONE V401SH からのアクセス" do
-  before do
-    request.user_agent = "J-PHONE/3.0/V401SH"
-    get :index
-  end
-  it 'テンプレートの探索順が正しいこと' do
-    response.template.mobile_template_candidates.should == [ 'mobile_jphone', 'mobile_vodafone', 'mobile_softbank', 'mobile' ]
   end
 end
 

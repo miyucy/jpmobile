@@ -1,12 +1,11 @@
+# -*- coding: utf-8 -*-
 #DoCoMoの時guid=onの付与
 class ActionController::Base #:nodoc:
   class_inheritable_accessor :docomo_guid_mode
 
-  class << self
-    def docomo_guid(mode=:docomo)
-      include Jpmobile::DocomoGuid
-      self.docomo_guid_mode = mode
-    end
+  def self.docomo_guid(mode=:docomo)
+    include Jpmobile::DocomoGuid
+    self.docomo_guid_mode = mode
   end
 end
 
